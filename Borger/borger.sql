@@ -6,9 +6,14 @@ CREATE TABLE [BorgerUser](
     [CreatedAt] TEXT NOT NULL
 );
 
+
 CREATE TABLE [Address](
     [Id] INTEGER PRIMARY KEY AUTOINCREMENT,
+    [BorgerUserId] INTEGER NOT NULL,
     [Address] TEXT NOT NULL,
-    [IsValid] DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY ([BorgerUserId]) REFERENCES [BorgerUser](Id)
+    [CreatedAt] TEXT NOT NULL,
+    [IsValid] TEXT NOT NULL,
+    FOREIGN KEY (BorgerUserId) REFERENCES BorgerUser(Id)
 );
+
+DELETE FROM Address;
