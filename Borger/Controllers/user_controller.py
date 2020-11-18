@@ -20,17 +20,16 @@ def create_user():
         except sqlite3.Error as e:
             return str(e), 500
 
-@user_controller.route('/api/getUser', methods=['GET'])
-def get_user():
+@user_controller.route('/api/getUser/<UserId>', methods=['GET'])
+def get_user(UserId):
         with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
             query = "SELECT * FROM BorgerUser WHERE Id = ?"
             cursor = conn.cursor()
             user = request.json
             try:
-                cursor.execute(query, (user["Id"], ))
-                conn.commit()
-                data = cursor.fetchall()
-                return {'status': 'success', 'data': data }, 200
+                cursor.execute(query, (UserId, ))
+                data = cursor.fetchone()
+                return {'user': data}, 200
             except sqlite3.Error as e:
                 return str(e), 500
 
@@ -43,37 +42,34 @@ def get_all_users():
             cursor.execute(query)
             conn.commit()
             data = cursor.fetchall()
-            return {'status': 'success', 'data': data }, 200
-        except sqlite3.Error as e:
-            return str(e), 500
-        
-@user_controller.route('/api/updateUser', methods=['PATCH'])
-def update_user():
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
-        query1 = "UPDATE BorgerUser SET UserId = ?, CreatedAt = datetime('now')"
-        cursor = conn.cursor()
-        user = request.json
-        # TO DO: update in Address table 
-        try:
-            cursor.execute(query1, (user["Id"], ))
-            conn.commit()
-            data = cursor.fetchall()
-            return {'status': 'success', 'data': data }, 200
+            return {'status': 'success', 'users': data }, 200
         except sqlite3.Error as e:
             return str(e), 500
 
-@user_controller.route('/api/deleteUser', methods=['DELETE'])
-def delete_user():
+@user_controller.route('/api/updateUser', methods=['PUT'])
+def update_user():
+    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+        queryUserTable = "UPDATE BorgerUser SET UserId = ?, CreatedAt = datetime('now') WHERE Id = ?"
+        cursor = conn.cursor()
+        user = request.json
+        try:
+            cursor.execute(queryUserTable, (user["UserId"], user["BorgerUserId"] ))
+            conn.commit()
+            return {'status': 'success'}, 200
+        except sqlite3.Error as e:
+            return str(e), 500
+
+@user_controller.route('/api/deleteUser/<userId>', methods=['DELETE'])
+def delete_user(userId):
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
         query1 = "DELETE FROM BorgerUser WHERE Id=?"
         query2 = "DELETE FROM Address WHERE BorgerUserId=?"
         cursor = conn.cursor()
         user = request.json
         try:
-            cursor.execute(query1, (user["Id"], ))
-            conn.commit()
-            cursor.execute(query2, (user["Id"], ))
+            cursor.execute(query1, (userId, ))
+            cursor.execute(query2, (userId, ))
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
-            return str(e), 500
+            return {'status': str(e)}, 500

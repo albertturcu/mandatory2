@@ -107,3 +107,39 @@
 /home/adelina/Documents/School/Top-up/Sem2/SI/MA2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.dll
 /home/adelina/Documents/School/Top-up/Sem2/SI/MA2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.pdb
 /home/adelina/Documents/School/Top-up/Sem2/SI/MA2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.genruntimeconfig.cache
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/appsettings.Development.json
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/appsettings.json
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/ocelot.json
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Gateway.API
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Gateway.API.deps.json
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Gateway.API.runtimeconfig.json
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Gateway.API.runtimeconfig.dev.json
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Gateway.API.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Gateway.API.pdb
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/FluentValidation.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.JsonPatch.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.MiddlewareAnalysis.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DiagnosticAdapter.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Microsoft.OpenApi.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Newtonsoft.Json.Bson.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Ocelot.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.Swagger.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.SwaggerGen.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.SwaggerUI.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.csprojAssemblyReference.cache
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.AssemblyInfoInputs.cache
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.AssemblyInfo.cs
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.csproj.CoreCompileInputs.cache
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.MvcApplicationPartsAssemblyInfo.cs
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.MvcApplicationPartsAssemblyInfo.cache
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/staticwebassets/Gateway.API.StaticWebAssets.Manifest.cache
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/staticwebassets/Gateway.API.StaticWebAssets.xml
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/scopedcss/bundle/Gateway.API.styles.css
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.RazorTargetAssemblyInfo.cache
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.csproj.CopyComplete
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.dll
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.pdb
+/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/Debug/netcoreapp3.1/Gateway.API.genruntimeconfig.cache

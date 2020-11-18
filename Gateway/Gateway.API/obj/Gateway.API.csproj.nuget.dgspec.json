@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/adelina/Documents/School/Top-up/Sem2/SI/MA2/mandatory2/Gateway/Gateway.API/Gateway.API.csproj": {}
+    "/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/Gateway.API.csproj": {}
   },
   "projects": {
-    "/home/adelina/Documents/School/Top-up/Sem2/SI/MA2/mandatory2/Gateway/Gateway.API/Gateway.API.csproj": {
+    "/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/Gateway.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/adelina/Documents/School/Top-up/Sem2/SI/MA2/mandatory2/Gateway/Gateway.API/Gateway.API.csproj",
+        "projectUniqueName": "/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/Gateway.API.csproj",
         "projectName": "Gateway.API",
-        "projectPath": "/home/adelina/Documents/School/Top-up/Sem2/SI/MA2/mandatory2/Gateway/Gateway.API/Gateway.API.csproj",
-        "packagesPath": "/home/adelina/.nuget/packages/",
-        "outputPath": "/home/adelina/Documents/School/Top-up/Sem2/SI/MA2/mandatory2/Gateway/Gateway.API/obj/",
+        "projectPath": "/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/Gateway.API.csproj",
+        "packagesPath": "/home/albert/.nuget/packages/",
+        "outputPath": "/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "/home/adelina/.nuget/NuGet/NuGet.Config"
+          "/home/albert/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -27,6 +24,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -38,6 +36,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Ocelot": {
               "target": "Package",
@@ -58,6 +57,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.8, 3.1.8]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[3.1.9, 3.1.9]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -66,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.404/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }
