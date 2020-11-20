@@ -1,6 +1,6 @@
 CREATE TABLE [BorgerUser](
     [Id] INTEGER PRIMARY KEY AUTOINCREMENT,
-    [UserId] TEXT NOT NULL UNIQUE,
+    [UserId] INTEGER NOT NULL UNIQUE,
     [CreatedAt] TEXT NOT NULL
 );
 
@@ -11,7 +11,6 @@ CREATE TABLE [Address](
     [Address] TEXT NOT NULL,
     [CreatedAt] TEXT NOT NULL,
     [IsValid] TEXT NOT NULL,
-    FOREIGN KEY (BorgerUserId) REFERENCES BorgerUser(Id)
+    FOREIGN KEY (BorgerUserId) REFERENCES BorgerUser(Id) ON DELETE CASCADE
 );
 
-DELETE FROM Address;

@@ -73,6 +73,18 @@
         "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT"]
       },
       {    
+        "DownstreamPathTemplate": "/api/{controller}",    
+        "DownstreamScheme": "http",
+        "DownstreamHostandPorts": [    
+         {    
+           "Host": "localhost",    
+           "Port": "5005"    
+          }     
+        ],    
+        "UpstreamPathTemplate": "/api/bank/{controller}",    
+        "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT"]
+      },
+      {    
         "DownstreamPathTemplate": "/api/{controller}/{everything}",    
         "DownstreamScheme": "http",
         "DownstreamHostandPorts": [    

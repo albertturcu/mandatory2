@@ -7,19 +7,18 @@ load_dotenv()
 
 address_controller = Blueprint('address_controller', __name__)
 
-@address_controller.route('/api/createAddress', methods=['POST'])
+@address_controller.route('/api/create-address', methods=['POST'])
 def create_address():
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+        conn.execute("PRAGMA foreign_keys = ON")
         cursor = conn.cursor()
         query = "INSERT INTO Address(BorgerUserId, Address, CreatedAt, IsValid) VALUES(?, ?, datetime('now'), True)"
         address = request.json
         try:
-            cursor.execute("SELECT * FROM BorgerUser WHERE Id = ?", (address['BorgerUserId'], ))
-            isUserRegistered = cursor.fetchone()
             cursor.execute("SELECT * FROM Address WHERE BorgerUserId = ?", (address['BorgerUserId'], ))
             isAddressRegistered = cursor.fetchall()
 
-            if isUserRegistered and not isAddressRegistered:
+            if not isAddressRegistered:
                 cursor.execute(query, (address['BorgerUserId'], address['Address']))
                 conn.commit()
                 return {'status': 'success'}, 200
@@ -29,7 +28,7 @@ def create_address():
             return {'status': str(e)}, 500
 
 
-@address_controller.route('/api/getAddress/<addressId>', methods=['GET'])
+@address_controller.route('/api/get-address/<addressId>', methods=['GET'])
 def get_address(addressId):
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
         query = "SELECT * FROM Address WHERE Id = ?"
@@ -45,7 +44,7 @@ def get_address(addressId):
         except sqlite3.Error as e:
             return {'status': str(e)}, 500
 
-@address_controller.route('/api/getAllAddresses', methods=['GET'])
+@address_controller.route('/api/get-all-addresses', methods=['GET'])
 def get_all_addresss():
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
         query = "SELECT * FROM Address"
@@ -62,7 +61,7 @@ def get_all_addresss():
         except sqlite3.Error as e:
             return {'status': str(e)}, 500
 
-@address_controller.route('/api/updateAddress', methods=['PUT'])
+@address_controller.route('/api/update-address', methods=['PUT'])
 def update_address():
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
         query1 = "UPDATE Address SET IsValid = False WHERE BorgerUserId = ?"
@@ -77,14 +76,13 @@ def update_address():
         except sqlite3.Error as e:
             return {'status': str(e)}, 500
 
-@address_controller.route('/api/deleteAddress/<userId>', methods=['DELETE'])
+@address_controller.route('/api/delete-address/<userId>', methods=['DELETE'])
 def delete_address(userId):
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
-        query1 = "DELETE FROM BorgerUser WHERE Id=?"
+        conn.execute("PRAGMA foreign_keys = ON")
         query2 = "DELETE FROM Address WHERE BorgerUserId=?"
         cursor = conn.cursor()
         try:
-            cursor.execute(query1, (userId, ))
             cursor.execute(query2, (userId, ))
             conn.commit()
             return {'status': 'success'}, 200

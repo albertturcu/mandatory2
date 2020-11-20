@@ -10,10 +10,10 @@ user_controller = Blueprint('user_controller', __name__)
 @user_controller.route('/api/create-user', methods=['POST'])
 def create_user():
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+        conn.commit()
         cursor = conn.cursor()
-        query = "INSERT INTO BorgerUser(UserId, CreatedAt) VALUES(?,datetime('now'))"
+        query = "INSERT INTO BankUser(UserId, CreatedAt, ModifiedAt) VALUES(?,datetime('now'),datetime('now'))"
         user = request.json
-
         try:
             cursor.execute(query, (user['UserId'],))
             conn.commit()
@@ -24,7 +24,7 @@ def create_user():
 @user_controller.route('/api/get-user/<UserId>', methods=['GET'])
 def get_user(UserId):
         with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
-            query = "SELECT * FROM BorgerUser WHERE Id = ?"
+            query = "SELECT * FROM BankUser WHERE Id = ?"
             cursor = conn.cursor()
             user = request.json
             try:
@@ -33,31 +33,34 @@ def get_user(UserId):
                 if data:
                     return {'user': data}, 200
                 else:
-                    return {'user': 'user not found'}, 200
+                    return {'status': "user not found"}, 300
             except sqlite3.Error as e:
                 return str(e), 500
 
 @user_controller.route('/api/get-all-users', methods=['GET'])
 def get_all_users():
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
-        query = "SELECT * FROM BorgerUser"
+        query = "SELECT * FROM BankUser"
         cursor = conn.cursor()
         try:
             cursor.execute(query)
             conn.commit()
             data = cursor.fetchall()
-            return {'status': 'success', 'users': data }, 200
+            if data:
+                return {'status': 'success', 'users': data }, 200
+            else:
+                return {'status': 'No data found' }, 200
         except sqlite3.Error as e:
             return str(e), 500
 
 @user_controller.route('/api/update-user', methods=['PUT'])
 def update_user():
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
-        queryUserTable = "UPDATE BorgerUser SET UserId = ?, CreatedAt = datetime('now') WHERE Id = ?"
+        queryUserTable = "UPDATE BankUser SET UserId = ?, ModifiedAt = datetime('now') WHERE Id = ?"
         cursor = conn.cursor()
         user = request.json
         try:
-            cursor.execute(queryUserTable, (user["UserId"], user["BorgerUserId"] ))
+            cursor.execute(queryUserTable, (user["UserId"], user["BankUserId"] ))
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
@@ -67,7 +70,7 @@ def update_user():
 def delete_user(userId):
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
-        query1 = "DELETE FROM BorgerUser WHERE Id=?"
+        query1 = "DELETE FROM BankUser WHERE Id=?"
         cursor = conn.cursor()
         user = request.json
         try:
