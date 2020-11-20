@@ -1,7 +1,7 @@
 CREATE TABLE [SkatUser](
     [Id] INTEGER PRIMARY KEY AUTOINCREMENT,
     [UserId] TEXT NOT NULL UNIQUE,
-    [CreatedAt] TEXT NOT NULL,
+    [CreatedAt] TEXT NOT NULL, 
     [IsActive] TEXT NOT NULL,
 );
 
