@@ -2,6 +2,7 @@ import sqlite3
 from flask import Blueprint, request
 from os import environ
 from dotenv import load_dotenv
+import os
 load_dotenv()
 
 
@@ -9,7 +10,7 @@ account_controller = Blueprint('account_controller', __name__)
 
 @account_controller.route('/api/create-account', methods=['POST'])
 def create_account():
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
         cursor = conn.cursor()
         query = "INSERT INTO Account(BankUserId, AccountNo, IsStudent, CreatedAt, ModifiedAt, Amount) VALUES(?,?,?,datetime('now'),datetime('now'),?)"
@@ -23,7 +24,7 @@ def create_account():
 
 @account_controller.route('/api/get-account/<AccountId>', methods=['GET'])
 def get_account(AccountId):
-        with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+        with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
             query = "SELECT * FROM Account WHERE Id = ?"
             cursor = conn.cursor()
             try:
@@ -38,7 +39,7 @@ def get_account(AccountId):
 
 @account_controller.route('/api/get-all-accounts', methods=['GET'])
 def get_all_accounts():
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         query = "SELECT * FROM Account"
         cursor = conn.cursor()
         try:
@@ -54,7 +55,7 @@ def get_all_accounts():
 
 @account_controller.route('/api/update-account', methods=['PUT'])
 def update_account():
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         queryAccountTable = "UPDATE Account SET IsStudent = ?, Amount = ?, ModifiedAt = datetime('now') WHERE BankUserId = ?"
         cursor = conn.cursor()
         account = request.json
@@ -67,7 +68,7 @@ def update_account():
 
 @account_controller.route('/api/delete-account/<AccountId>', methods=['DELETE'])
 def delete_account(AccountId):
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
         query1 = "DELETE FROM Account WHERE Id=?"
         cursor = conn.cursor()
@@ -85,11 +86,15 @@ def wtihdraw_money():
     selectAmountForBankUserIdQuery = "SELECT Amount FROM Account WHERE BankUserId = ?"
     updateAmountForBankUserIdQuery = "UPDATE Account SET Amount = ? WHERE BankUserId = ?"
 
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         cursor = conn.cursor()
         try:
             cursor.execute(selectBankUserIdQuery, (data['UserId'],))
-            bankUserId = cursor.fetchone()[0]
+            bankUserId = cursor.fetchone()
+            if bankUserId:
+                bankUserId = bankUserId[0]
+            else:
+                raise Exception("Account not found!")
             cursor.execute(selectAmountForBankUserIdQuery, (bankUserId,))
             currentAccountAmount = cursor.fetchone()[0]
             if currentAccountAmount - data['Amount'] >= 0:
@@ -101,3 +106,5 @@ def wtihdraw_money():
                 return {'status': 'Not enough money'}, 404
         except sqlite3.Error as e:
             return {'status': str(e)}, 500
+        except Exception as e:
+            return {'status': str(e)}, 500    

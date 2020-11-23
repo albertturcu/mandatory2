@@ -19,7 +19,7 @@ def add_deposit():
     else:
         r = requests.post('http://localhost:7071/api/Interest_Rate_Calculator', json={"Amount": data['Amount']}, headers=headers)
         response = r.json()
-        with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+        with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
             try:
                 conn.execute("PRAGMA foreign_keys = ON")
                 cursor = conn.cursor()
@@ -42,7 +42,7 @@ def add_deposit():
 
 @deposit_controller.route('/api/list-deposits/<BankUserId>', methods=['GET'])
 def list_deposits(BankUserId):
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         listAllDepositsQuery = "SELECT * FROM Deposit WHERE BankUserId = ?"
         cursor = conn.cursor()
         try:

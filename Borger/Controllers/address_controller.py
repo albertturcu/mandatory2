@@ -9,7 +9,7 @@ address_controller = Blueprint('address_controller', __name__)
 
 @address_controller.route('/api/create-address', methods=['POST'])
 def create_address():
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("borger.sqlite", check_same_thread=False) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
         cursor = conn.cursor()
         query = "INSERT INTO Address(BorgerUserId, Address, CreatedAt, IsValid) VALUES(?, ?, datetime('now'), True)"
@@ -30,7 +30,7 @@ def create_address():
 
 @address_controller.route('/api/get-address/<addressId>', methods=['GET'])
 def get_address(addressId):
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("borger.sqlite", check_same_thread=False) as conn:
         query = "SELECT * FROM Address WHERE Id = ?"
         cursor = conn.cursor()
         try:
@@ -46,7 +46,7 @@ def get_address(addressId):
 
 @address_controller.route('/api/get-all-addresses', methods=['GET'])
 def get_all_addresss():
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("borger.sqlite", check_same_thread=False) as conn:
         query = "SELECT * FROM Address"
         cursor = conn.cursor()
 
@@ -57,13 +57,13 @@ def get_all_addresss():
             if data:
                 return {'status': 'success', 'data': data}, 200
             else:
-                return {'status': 'Not found'}, 200
+                return {'status': 'Address not found'}, 200
         except sqlite3.Error as e:
             return {'status': str(e)}, 500
 
 @address_controller.route('/api/update-address', methods=['PUT'])
 def update_address():
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("borger.sqlite", check_same_thread=False) as conn:
         query1 = "UPDATE Address SET IsValid = False WHERE BorgerUserId = ?"
         query2 = "INSERT INTO Address(BorgerUserId, Address, CreatedAt, IsValid) VALUES(?, ?, datetime('now'), True)"
         cursor = conn.cursor()
@@ -78,7 +78,7 @@ def update_address():
 
 @address_controller.route('/api/delete-address/<userId>', methods=['DELETE'])
 def delete_address(userId):
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("borger.sqlite", check_same_thread=False) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
         query2 = "DELETE FROM Address WHERE BorgerUserId=?"
         cursor = conn.cursor()

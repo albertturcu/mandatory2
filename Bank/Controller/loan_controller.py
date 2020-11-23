@@ -19,7 +19,7 @@ def create_loan():
     updateAccountAmountQuery = "UPDATE Account SET Amount = ?, ModifiedAt = datetime('now') WHERE BankUserId = ?"
     currentAccountAmountQuery = "SELECT Amount FROM Account WHERE BankUserId = ?"
 
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         cursor = conn.cursor()
 
         try:
@@ -53,7 +53,7 @@ def pay_loan():
     updateAccountAmountQuery = "UPDATE Account SET Amount = ?, ModifiedAt = datetime('now') WHERE BankUserId = ?"
 
 
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         cursor = conn.cursor()
         currentAccountAmount = cursor.execute(currentAccountAmountQuery, (data['BankUserId'],)).fetchone()[0]
         currentLoanAmount = cursor.execute(currentLoanAmountQuery, (data['LoanId'],)).fetchone()[0]
@@ -73,7 +73,7 @@ def pay_loan():
 @loan_controller.route('/api/list-loans/<BankUserId>', methods=['GET'])
 def list_loans(BankUserId):
     selectNotPaidLoansQuery = "SELECT * FROM Loan WHERE BankUserId = ? and Amount > 0"
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         cursor = conn.cursor()
         try:
             cursor.execute(selectNotPaidLoansQuery, (BankUserId,))

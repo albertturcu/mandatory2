@@ -17,9 +17,8 @@ def create_year():
             cursor.execute(query_get_skatusers)
             skatYearId = cursor.lastrowid
             skat_users = cursor.fetchall()
-            amount = 1000
+            amount = 0
             for user in skat_users:
-                amount += 100
                 query_skat_year = "INSERT INTO SkatUserYear(SkatUserId, SkatYearId, UserId, IsPaid, Amount) VALUES(?,?,?,?,?)"
                 cursor.execute(query_skat_year, (user[0], skatYearId, user[1], 0, amount ))
                 conn.commit()
@@ -41,7 +40,7 @@ def get_skat_year(Id):
                     return {'Skat Year': 'year not found'}, 200
             except sqlite3.Error as e:
                 return {'status': str(e)}, 500
-            
+
 @year_controller.route('/api/get-skat-years', methods=['GET'])
 def get_skat_years():
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:

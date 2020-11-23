@@ -19,7 +19,7 @@ def create_user():
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
             return {'status': str(e)}, 500
-        
+
 @user_controller.route('/api/get-user/<Id>', methods=['GET'])
 def get_user(Id):
         with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
@@ -88,16 +88,23 @@ def pay_taxes():
             cursor.execute(query_get_user, (req_data['UserId'], ))
             conn.commit()
             user_data = cursor.fetchall()
+
+            if not user_data:
+                raise Exception('Skat user not found!')
+
             r_tax_calculator = requests.post('http://localhost:7071/api/Skat_Tax_Calculator', json={"money": req_data['Amount']}, headers=headers )
-            r_withdraw_money = requests.post("http://localhost:5005/api/withdraw-money", json={"UserId": user_data[0][3], "Amount": r_tax_calculator.text }, headers=headers )
-            print(r_withdraw_money.status_code)
+            r_withdraw_money = requests.post("http://localhost:5000/api/Bank/withdraw-money", json={"UserId": user_data[0][3], "Amount": r_tax_calculator.json()['tax_money'] }, headers=headers )
+
             if int(user_data[0][4]) <= 0 and r_tax_calculator.status_code == 200 and r_withdraw_money.status_code == 200:
-                    cursor.execute(query_update_user, ( r_tax_calculator.text, 1, user_data[0][3] ))
+                    cursor.execute(query_update_user, ( r_tax_calculator.json()['tax_money'], 1, user_data[0][3] ))
                     conn.commit()
                     return {'status': 'success'}, 200
             elif r_withdraw_money.status_code == 500:
-                return {'status': 'Not enough money in your account'}, 404
+                return {'status': r_withdraw_money.json()["status"]}, 404
             else:
                  return {'status': 'something went wrong'}, 404
         except sqlite3.Error as e:
+
+            return {'status': str(e)}, 500
+        except Exception as e:
             return {'status': str(e)}, 500

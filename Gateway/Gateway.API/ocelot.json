@@ -108,6 +108,18 @@
         "UpstreamPathTemplate": "/api/skat/{controller}/{identifier}",    
         "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT"]
       },
+        {    
+        "DownstreamPathTemplate": "/api/{controller}",    
+        "DownstreamScheme": "http",
+        "DownstreamHostandPorts": [    
+         {    
+           "Host": "localhost",    
+           "Port": "5006"    
+          }     
+        ],    
+        "UpstreamPathTemplate": "/api/skat/{controller}",    
+        "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT"]
+      },
       {    
         "DownstreamPathTemplate": "/api/{controller}/{identifier}/{everything}",    
         "DownstreamScheme": "http",

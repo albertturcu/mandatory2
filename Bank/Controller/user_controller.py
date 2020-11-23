@@ -9,7 +9,7 @@ user_controller = Blueprint('user_controller', __name__)
 
 @user_controller.route('/api/create-user', methods=['POST'])
 def create_user():
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         conn.commit()
         cursor = conn.cursor()
         query = "INSERT INTO BankUser(UserId, CreatedAt, ModifiedAt) VALUES(?,datetime('now'),datetime('now'))"
@@ -23,7 +23,7 @@ def create_user():
 
 @user_controller.route('/api/get-user/<UserId>', methods=['GET'])
 def get_user(UserId):
-        with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+        with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
             query = "SELECT * FROM BankUser WHERE Id = ?"
             cursor = conn.cursor()
             user = request.json
@@ -39,7 +39,7 @@ def get_user(UserId):
 
 @user_controller.route('/api/get-all-users', methods=['GET'])
 def get_all_users():
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         query = "SELECT * FROM BankUser"
         cursor = conn.cursor()
         try:
@@ -55,7 +55,7 @@ def get_all_users():
 
 @user_controller.route('/api/update-user', methods=['PUT'])
 def update_user():
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         queryUserTable = "UPDATE BankUser SET UserId = ?, ModifiedAt = datetime('now') WHERE Id = ?"
         cursor = conn.cursor()
         user = request.json
@@ -68,7 +68,7 @@ def update_user():
 
 @user_controller.route('/api/delete-user/<userId>', methods=['DELETE'])
 def delete_user(userId):
-    with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
+    with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
         query1 = "DELETE FROM BankUser WHERE Id=?"
         cursor = conn.cursor()

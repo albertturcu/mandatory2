@@ -25,3 +25,4 @@ CREATE TABLE [SkatYear](
     [StartDate] TEXT NOT NULL,
     [EndDate] TEXT NOT NULL
 );
+

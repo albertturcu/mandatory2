@@ -32,5 +32,3 @@ CREATE TABLE IF NOT EXISTS [Account](
     [Amount] INTEGER NOT NULL,
     FOREIGN KEY(BankUserId) REFERENCES BankUser(Id) ON DELETE CASCADE
 );
-
-drop table [Loan]
