@@ -22,9 +22,9 @@ def create_year():
                 query_skat_year = "INSERT INTO SkatUserYear(SkatUserId, SkatYearId, UserId, IsPaid, Amount) VALUES(?,?,?,?,?)"
                 cursor.execute(query_skat_year, (user[0], skatYearId, user[1], 0, amount ))
                 conn.commit()
-            return {'status': 'success'}, 200
+            return {'status': 'success'}, 201
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
 
 @year_controller.route('/api/get-skat-year/<Id>', methods=['GET'])
 def get_skat_year(Id):
@@ -37,9 +37,9 @@ def get_skat_year(Id):
                 if data:
                     return {'Skat Year': data}, 200
                 else:
-                    return {'Skat Year': 'year not found'}, 200
+                    return {'Skat Year': 'year not found'}, 404
             except sqlite3.Error as e:
-                return {'status': str(e)}, 500
+                return {'status': str(e)}, 400
 
 @year_controller.route('/api/get-skat-years', methods=['GET'])
 def get_skat_years():
@@ -52,7 +52,7 @@ def get_skat_years():
             data = cursor.fetchall()
             return {'status': 'success', 'data': data }, 200
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
 
 @year_controller.route('/api/update-year/<Id>', methods=['PATCH'])
 def update_year(Id):
@@ -65,7 +65,7 @@ def update_year(Id):
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
         
 @year_controller.route('/api/delete-year/<Id>', methods=['DELETE'])
 def delete_year(Id):
@@ -77,4 +77,4 @@ def delete_year(Id):
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 404

@@ -15,7 +15,7 @@ headers = {
 def add_deposit():
     data = request.json
     if not validate_amount(data['Amount']):
-        return {'status': 'Negative amount not supported' }, 500
+        return {'status': 'Negative amount not supported' }, 400
     else:
         r = requests.post('http://localhost:7071/api/Interest_Rate_Calculator', json={"Amount": data['Amount']}, headers=headers)
         response = r.json()
@@ -30,15 +30,15 @@ def add_deposit():
 
                 currentAmmount = cursor.execute(currentAmountQuery, (data['BankUserId'],)).fetchone()[0]
                 if not currentAmmount:
-                    return {'status': 'Given user doesn\'t have an account yet'}, 500
+                    return {'status': 'Given user doesn\'t have an account yet'}, 404
 
                 newAmmount = currentAmmount + response['amount_with_interest']
                 cursor.execute(updateAccountAmountQuery, (newAmmount, data['BankUserId']))
                 cursor.execute(insertDepositAmountQuery, (data['BankUserId'], response['amount_with_interest']))
                 conn.commit()
             except sqlite3.Error as e:
-                return {'Status': str(e)}, 500
-        return {'Status':  'success'}, 200
+                return {'Status': str(e)}, 400
+        return {'Status':  'success'}, 201
 
 @deposit_controller.route('/api/list-deposits/<BankUserId>', methods=['GET'])
 def list_deposits(BankUserId):
@@ -49,7 +49,7 @@ def list_deposits(BankUserId):
             deposits = cursor.execute(listAllDepositsQuery, (BankUserId,)).fetchall()
             return {'Data':  deposits}, 200
         except sqlite3.Error as e:
-            return {'Status': str(e)}, 500
+            return {'Status': str(e)}, 400
 
 
 def validate_amount(amount: int)-> bool:

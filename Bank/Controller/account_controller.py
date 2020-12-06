@@ -18,7 +18,7 @@ def create_account():
         try:
             cursor.execute(query, (account['BankUserId'],account['AccountNo'],account['IsStudent'],account['Amount']))
             conn.commit()
-            return {'status': 'success'}, 200
+            return {'status': 'success'}, 201
         except sqlite3.Error as e:
             return str(e), 500
 
@@ -33,9 +33,9 @@ def get_account(AccountId):
                 if data:
                     return {'account': data}, 200
                 else:
-                    return {'status': "account not found"}, 300
+                    return {'status': "account not found"}, 404
             except sqlite3.Error as e:
-                return str(e), 500
+                return str(e), 400
 
 @account_controller.route('/api/get-all-accounts', methods=['GET'])
 def get_all_accounts():
@@ -49,9 +49,9 @@ def get_all_accounts():
             if data:
                 return {'status': 'success', 'accounts': data }, 200
             else:
-                return {'status': 'No data found' }, 200
+                return {'status': 'No data found' }, 404
         except sqlite3.Error as e:
-            return str(e), 500
+            return str(e), 400
 
 @account_controller.route('/api/update-account', methods=['PUT'])
 def update_account():
@@ -64,7 +64,7 @@ def update_account():
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
-            return str(e), 500
+            return str(e), 400
 
 @account_controller.route('/api/delete-account/<AccountId>', methods=['DELETE'])
 def delete_account(AccountId):
@@ -77,7 +77,7 @@ def delete_account(AccountId):
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 404
 
 @account_controller.route('/api/withdraw-money', methods=['POST'])
 def wtihdraw_money():
@@ -105,6 +105,6 @@ def wtihdraw_money():
             else:
                 return {'status': 'Not enough money'}, 404
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
         except Exception as e:
-            return {'status': str(e)}, 500    
+            return {'status': str(e)}, 400

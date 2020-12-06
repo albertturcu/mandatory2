@@ -21,11 +21,11 @@ def create_address():
             if not isAddressRegistered:
                 cursor.execute(query, (address['BorgerUserId'], address['Address']))
                 conn.commit()
-                return {'status': 'success'}, 200
+                return {'status': 'success'}, 201
             else:
-                return {'status': 'The user id does not exist or the user has an active address already'}, 500
+                return {'status': 'The user id does not exist or the user has an active address already'}, 404
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
 
 
 @address_controller.route('/api/get-address/<addressId>', methods=['GET'])
@@ -40,9 +40,9 @@ def get_address(addressId):
             if data:
                 return {'status': 'success', 'data': data}, 200
             else:
-                return {'status': 'Not found'}, 200
+                return {'status': 'Not found'}, 404
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
 
 @address_controller.route('/api/get-all-addresses', methods=['GET'])
 def get_all_addresss():
@@ -57,9 +57,9 @@ def get_all_addresss():
             if data:
                 return {'status': 'success', 'data': data}, 200
             else:
-                return {'status': 'Address not found'}, 200
+                return {'status': 'Address not found'}, 404
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
 
 @address_controller.route('/api/update-address', methods=['PUT'])
 def update_address():
@@ -74,7 +74,7 @@ def update_address():
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
 
 @address_controller.route('/api/delete-address/<userId>', methods=['DELETE'])
 def delete_address(userId):
@@ -87,4 +87,4 @@ def delete_address(userId):
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400

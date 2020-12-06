@@ -16,9 +16,9 @@ def create_user():
         try:
             cursor.execute(query, (user['UserId'], ))
             conn.commit()
-            return {'status': 'success'}, 200
+            return {'status': 'success'}, 201
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
 
 @user_controller.route('/api/get-user/<Id>', methods=['GET'])
 def get_user(Id):
@@ -31,9 +31,9 @@ def get_user(Id):
                 if data:
                     return {'Skat User': data}, 200
                 else:
-                    return {'Skat User': 'user not found'}, 200
+                    return {'Skat User': 'user not found'}, 404
             except sqlite3.Error as e:
-                return {'status': str(e)}, 500
+                return {'status': str(e)}, 400
 
 @user_controller.route('/api/get-all-users', methods=['GET'])
 def get_all_users():
@@ -46,7 +46,7 @@ def get_all_users():
             data = cursor.fetchall()
             return {'status': 'success', 'users': data }, 200
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
 
 @user_controller.route('/api/update-user/<Id>', methods=['PUT'])
 def update_user(Id):
@@ -59,7 +59,7 @@ def update_user(Id):
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
         
 @user_controller.route('/api/delete-user/<Id>', methods=['DELETE'])
 def delete_user(Id):
@@ -71,7 +71,7 @@ def delete_user(Id):
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
 
 headers = {
     'Content-Type': 'application/json-patch+json'
@@ -105,6 +105,6 @@ def pay_taxes():
                  return {'status': 'something went wrong'}, 404
         except sqlite3.Error as e:
 
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400
         except Exception as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400

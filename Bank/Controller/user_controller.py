@@ -17,9 +17,9 @@ def create_user():
         try:
             cursor.execute(query, (user['UserId'],))
             conn.commit()
-            return {'status': 'success'}, 200
+            return {'status': 'success'}, 201
         except sqlite3.Error as e:
-            return str(e), 500
+            return str(e), 400
 
 @user_controller.route('/api/get-user/<UserId>', methods=['GET'])
 def get_user(UserId):
@@ -33,9 +33,9 @@ def get_user(UserId):
                 if data:
                     return {'user': data}, 200
                 else:
-                    return {'status': "user not found"}, 300
+                    return {'status': "user not found"}, 404
             except sqlite3.Error as e:
-                return str(e), 500
+                return str(e), 400
 
 @user_controller.route('/api/get-all-users', methods=['GET'])
 def get_all_users():
@@ -49,9 +49,9 @@ def get_all_users():
             if data:
                 return {'status': 'success', 'users': data }, 200
             else:
-                return {'status': 'No data found' }, 200
+                return {'status': 'No data found' }, 404
         except sqlite3.Error as e:
-            return str(e), 500
+            return str(e), 400
 
 @user_controller.route('/api/update-user', methods=['PUT'])
 def update_user():
@@ -64,7 +64,7 @@ def update_user():
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
-            return str(e), 500
+            return str(e), 400
 
 @user_controller.route('/api/delete-user/<userId>', methods=['DELETE'])
 def delete_user(userId):
@@ -78,4 +78,4 @@ def delete_user(userId):
             conn.commit()
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
-            return {'status': str(e)}, 500
+            return {'status': str(e)}, 400

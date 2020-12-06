@@ -36,13 +36,13 @@ def create_loan():
                 cursor.execute(insertLoanDetailsQuery, (data['BankUserId'], data['LoanAmount']))
                 cursor.execute(updateAccountAmountQuery, (newAccountAmount, data['BankUserId']))
                 conn.commit()
-                return {'Status': 'Loan Approved'}, 200
+                return {'Status': 'Loan Approved'}, 201
             elif isValidLoan == 403:
                 return {'Status': 'Invalid Loan'}, 403
             else:
-                return {'Status': 'Something went wrong'}, 404
+                return {'Status': 'Something went wrong'}, 400
         except sqlite3.Error as e:
-            return {'Status': str(e)}, 500
+            return {'Status': str(e)}, 400
 
 @loan_controller.route('/api/pay-loan', methods=['POST'])
 def pay_loan():
@@ -68,7 +68,7 @@ def pay_loan():
             conn.commit()
             return {'Status': 'Loan was successfully paid'}, 200
         else:
-            return {'Status': 'Unable to pay loan: Not enough money in the account'}, 404
+            return {'Status': 'Unable to pay loan: Not enough money in the account'}, 400
 
 @loan_controller.route('/api/list-loans/<BankUserId>', methods=['GET'])
 def list_loans(BankUserId):
@@ -81,9 +81,9 @@ def list_loans(BankUserId):
             if len(allLoans) > 0:
                 return {'Data': allLoans}, 200
             else:
-                return {'Status': 'There are no current loans for the given user'}, 200
+                return {'Status': 'There are no current loans for the given user'}, 404
         except sqlite3.Error as e:
-            return {'Status': str(e)}, 500
+            return {'Status': str(e)}, 400
 
 def validate_amount(amount: int)-> bool:
     if amount < 1:
