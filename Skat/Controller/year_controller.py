@@ -11,7 +11,7 @@ def create_year():
         cursor = conn.cursor()
         query = "INSERT INTO SkatYear(Label, CreatedAt, ModifiedAt, StartDate, EndDate) VALUES(?,datetime('now'),datetime('now'),?,?)"
         query_get_skatusers = "SELECT * FROM SkatUser"
-        year = request.json
+        yUserear = request.json
         try:
             cursor.execute( query, (year['Label'], year['StartDate'], year['EndDate'] ))
             cursor.execute(query_get_skatusers)
@@ -54,7 +54,7 @@ def get_skat_years():
         except sqlite3.Error as e:
             return {'status': str(e)}, 400
 
-@year_controller.route('/api/update-year/<Id>', methods=['PATCH'])
+@year_controller.route('/api/update-year/<Id>', methods=['PUT'])
 def update_year(Id):
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:
         query = "UPDATE SkatYear SET Label = ?, ModifiedAt = datetime('now'), StartDate = ? , EndDate = ? WHERE Id = ? "
@@ -66,7 +66,7 @@ def update_year(Id):
             return {'status': 'success'}, 200
         except sqlite3.Error as e:
             return {'status': str(e)}, 400
-        
+
 @year_controller.route('/api/delete-year/<Id>', methods=['DELETE'])
 def delete_year(Id):
     with sqlite3.connect(environ.get('DATABASE_URL'), check_same_thread=False) as conn:

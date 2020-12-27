@@ -57,8 +57,19 @@ def get_all_accounts():
 def update_account():
     with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         queryAccountTable = "UPDATE Account SET IsStudent = ?, Amount = ?, ModifiedAt = datetime('now') WHERE BankUserId = ?"
+        queryAccountCheck = "SELECT * FROM Account WHERE BankUserId = ?"
         cursor = conn.cursor()
         account = request.json
+        try:
+            cursor.execute(queryAccountCheck, (account['BankUserId'],))
+            conn.commit()
+            data = cursor.fetchall()
+            if data:
+                pass
+            else:
+                return {'status': 'Account not existent' }, 404
+        except sqlite3.Error as e:
+            return str(e), 400
         try:
             cursor.execute(queryAccountTable, (account['IsStudent'],account['Amount'], account['BankUserId']))
             conn.commit()
@@ -71,7 +82,20 @@ def delete_account(AccountId):
     with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
         query1 = "DELETE FROM Account WHERE Id=?"
+        queryAccountCheck = "SELECT * FROM Account WHERE Id = ?"
         cursor = conn.cursor()
+
+        try:
+            cursor.execute(queryAccountCheck, (AccountId,))
+            conn.commit()
+            data = cursor.fetchall()
+            if data:
+                pass
+            else:
+                return {'status': 'Account not existent' }, 404
+        except sqlite3.Error as e:
+            return str(e), 400
+
         try:
             cursor.execute(query1, (AccountId, ))
             conn.commit()

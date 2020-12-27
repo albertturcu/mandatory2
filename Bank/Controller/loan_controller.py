@@ -23,7 +23,13 @@ def create_loan():
         cursor = conn.cursor()
 
         try:
-            accountAmount = cursor.execute(selectAccountAmountQuery, (data['BankUserId'], )).fetchone()[0]
+            accountAmount = cursor.execute(selectAccountAmountQuery, (data['BankUserId'], )).fetchone()
+
+            if not accountAmount:
+                return {'status': 'Given user doesn\'t have an account yet'}, 404
+            else:
+                accountAmount = accountAmount[0]
+
             if not validate_amount(data['LoanAmount']):
                 return {'Status': 'Negative loan is not possible'}, 200
 
@@ -51,18 +57,30 @@ def pay_loan():
     currentLoanAmountQuery = "SELECT Amount FROM Loan WHERE Id = ?"
     updateLoanAmountQuery = "UPDATE Loan SET Amount = 0, ModifiedAt = datetime('now') WHERE Id = ?"
     updateAccountAmountQuery = "UPDATE Account SET Amount = ?, ModifiedAt = datetime('now') WHERE BankUserId = ?"
-
+    currentLoanCheck = "SELECT * FROM Loan WHERE Id = ?"
 
     with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         cursor = conn.cursor()
         currentAccountAmount = cursor.execute(currentAccountAmountQuery, (data['BankUserId'],)).fetchone()[0]
-        currentLoanAmount = cursor.execute(currentLoanAmountQuery, (data['LoanId'],)).fetchone()[0]
+        currentLoanAmount = cursor.execute(currentLoanAmountQuery, (data['LoanId'],)).fetchone()
+
+        try:
+            cursor.execute(currentLoanCheck, (data['LoanId'],))
+            conn.commit()
+            isLoanExistent = cursor.fetchall()
+
+            if isLoanExistent:
+                currentLoanAmount = currentLoanAmount[0]
+            else:
+                return {'status': 'Loan not existent' }, 404
+        except sqlite3.Error as e:
+            return str(e), 400
+
         if currentLoanAmount == 0:
             return {'Status': 'Loan is paid for the given loan id'}, 404
 
         if currentAccountAmount - currentLoanAmount >= 0:
             newAccountAmount = currentAccountAmount - currentLoanAmount
-            print(newAccountAmount)
             cursor.execute(updateLoanAmountQuery, (data['LoanId'],))
             cursor.execute(updateAccountAmountQuery, (newAccountAmount, data['BankUserId']))
             conn.commit()

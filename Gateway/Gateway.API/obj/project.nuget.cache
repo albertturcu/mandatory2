@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "UVZEBRumjIdX7xMd4vanU90UxVw8IxQPxHuQme5dwHmwqBInxeKCtwmq8t79LztY/ZtIgsTQvJw+/PiYNSW7+g==",
+  "dgSpecHash": "kixsJDzhABpGb8eBTrpBwnlb4htB7ucrGZWbgRSJdySfLEdyvePPyAATNVqfSKw4GzY3886CcT2DeSTMlgBTOA==",
   "success": true,
   "projectFilePath": "/home/albert/Documents/School/KEA/Sem2/System Integration/mandatory2/mandatory2/Gateway/Gateway.API/Gateway.API.csproj",
   "expectedPackageFiles": [
@@ -23,8 +23,8 @@
     "/home/albert/.nuget/packages/system.componentmodel.annotations/4.4.1/system.componentmodel.annotations.4.4.1.nupkg.sha512",
     "/home/albert/.nuget/packages/system.diagnostics.diagnosticsource/4.7.0/system.diagnostics.diagnosticsource.4.7.0.nupkg.sha512",
     "/home/albert/.nuget/packages/microsoft.netcore.app.ref/3.1.0/microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
-    "/home/albert/.nuget/packages/microsoft.aspnetcore.app.ref/3.1.8/microsoft.aspnetcore.app.ref.3.1.8.nupkg.sha512",
-    "/home/albert/.nuget/packages/microsoft.netcore.app.host.linux-x64/3.1.9/microsoft.netcore.app.host.linux-x64.3.1.9.nupkg.sha512"
+    "/home/albert/.nuget/packages/microsoft.aspnetcore.app.ref/3.1.10/microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "/home/albert/.nuget/packages/microsoft.netcore.app.host.linux-x64/3.1.10/microsoft.netcore.app.host.linux-x64.3.1.10.nupkg.sha512"
   ],
   "logs": []
 }

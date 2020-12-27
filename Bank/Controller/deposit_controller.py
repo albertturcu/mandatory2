@@ -28,11 +28,11 @@ def add_deposit():
                 updateAccountAmountQuery = "UPDATE Account SET ModifiedAt = datetime('now'), Amount = ? WHERE BankUserId = ?"
                 insertDepositAmountQuery = "INSERT INTO Deposit(BankUserID, CreatedAt, Amount) VALUES (?, datetime('now'), ?)"
 
-                currentAmmount = cursor.execute(currentAmountQuery, (data['BankUserId'],)).fetchone()[0]
+                currentAmmount = cursor.execute(currentAmountQuery, (data['BankUserId'],)).fetchone()
                 if not currentAmmount:
                     return {'status': 'Given user doesn\'t have an account yet'}, 404
 
-                newAmmount = currentAmmount + response['amount_with_interest']
+                newAmmount = currentAmmount[0] + response['amount_with_interest']
                 cursor.execute(updateAccountAmountQuery, (newAmmount, data['BankUserId']))
                 cursor.execute(insertDepositAmountQuery, (data['BankUserId'], response['amount_with_interest']))
                 conn.commit()

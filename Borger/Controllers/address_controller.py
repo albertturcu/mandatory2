@@ -81,7 +81,20 @@ def delete_address(userId):
     with sqlite3.connect("borger.sqlite", check_same_thread=False) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
         query2 = "DELETE FROM Address WHERE BorgerUserId=?"
+        queryUserCheck = "SELECT * FROM Address WHERE Id = ?"
         cursor = conn.cursor()
+
+        try:
+            cursor.execute(queryUserCheck, (userId,))
+            conn.commit()
+            data = cursor.fetchall()
+            if data:
+                pass
+            else:
+                return {'status': 'User not existent' }, 404
+        except sqlite3.Error as e:
+            return str(e), 400
+
         try:
             cursor.execute(query2, (userId, ))
             conn.commit()

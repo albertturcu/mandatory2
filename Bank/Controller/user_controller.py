@@ -57,8 +57,21 @@ def get_all_users():
 def update_user():
     with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         queryUserTable = "UPDATE BankUser SET UserId = ?, ModifiedAt = datetime('now') WHERE Id = ?"
+        queryUserCheck = "SELECT * FROM BankUser WHERE Id = ?"
         cursor = conn.cursor()
         user = request.json
+
+        try:
+            cursor.execute(queryUserCheck, (user["UserId"],))
+            conn.commit()
+            data = cursor.fetchall()
+            if data:
+                pass
+            else:
+                return {'status': 'User not existent' }, 404
+        except sqlite3.Error as e:
+            return str(e), 400
+
         try:
             cursor.execute(queryUserTable, (user["UserId"], user["BankUserId"] ))
             conn.commit()
@@ -71,8 +84,21 @@ def delete_user(userId):
     with sqlite3.connect("Bank.sqlite", check_same_thread=False) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
         query1 = "DELETE FROM BankUser WHERE Id=?"
+        queryUserCheck = "SELECT * FROM BankUser WHERE Id = ?"
         cursor = conn.cursor()
         user = request.json
+
+        try:
+            cursor.execute(queryUserCheck, (userId,))
+            conn.commit()
+            data = cursor.fetchall()
+            if data:
+                pass
+            else:
+                return {'status': 'User not existent' }, 404
+        except sqlite3.Error as e:
+            return str(e), 400
+
         try:
             cursor.execute(query1, (userId, ))
             conn.commit()
